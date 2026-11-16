@@ -1,0 +1,10 @@
+FROM python:3.12-slim
+RUN pip install --no-cache-dir cryptography==43.0.3
+WORKDIR /app
+COPY core ./core
+COPY relay ./relay
+COPY utils ./utils
+VOLUME /data
+EXPOSE 7072
+ENV RELAY_TOKEN=change-me
+CMD ["python", "-m", "relay", "--port", "7072", "--registry", "/data/registry.json"]
