@@ -1,4 +1,4 @@
-"""RemoteLink – single entry point.
+"""ViunaLink – single entry point.
 
   python main.py              → پنجره یکپارچه (میزبان + بیننده)
   python main.py host         → فقط میزبان (قدیمی)
