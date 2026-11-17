@@ -21,6 +21,6 @@ jobs:
         run: python build.py --portable
       - uses: actions/upload-artifact@v4
         with:
-          name: NexaLink-portable-win64
-          path: dist/NexaLink-portable-win64.zip
+          name: ViunaLink-portable-win64
+          path: dist/ViunaLink-portable-win64.zip
           if-no-files-found: error
