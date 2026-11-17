@@ -1,4 +1,4 @@
-"""Where RemoteLink keeps its data. Portable mode keeps everything next to the
+"""Where ViunaLink keeps its data. Portable mode keeps everything next to the
 program so it can run from a USB stick without installing or admin rights."""
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def _writable(p: Path) -> bool:
 
 
 def is_portable() -> bool:
-    if os.environ.get("REMOTELINK_HOME"):
+    if os.environ.get("VIUNALINK_HOME") or os.environ.get("REMOTELINK_HOME"):
         return True
     return (app_dir() / PORTABLE_FLAG).exists() and _writable(app_dir() / "data")
 
@@ -42,10 +42,10 @@ def data_dir() -> Path:
         base = Path(os.environ.get("APPDATA", Path.home()))
     else:
         base = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
-    return base / "remotelink"
+    return (base / "viunalink") if not (base / "remotelink").exists() else (base / "remotelink")
 
 
 def default_download_dir() -> Path:
     if is_portable():
         return data_dir() / "received"
-    return Path.home() / "Downloads" / "RemoteLink"
+    return Path.home() / "Downloads" / "ViunaLink"
