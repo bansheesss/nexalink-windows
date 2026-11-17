@@ -48,9 +48,27 @@ def main() -> int:
         cmd += ["--hidden-import", f"pynput.{mod}.{backend}"]
     for pkg in ("client", "server", "core", "utils", "ui", "relay"):
         cmd += ["--hidden-import", pkg]
-    icon = ROOT / "icon.ico"
-    if icon.exists():
-        cmd += ["--icon", str(icon)]
+    # Draw the ViunaLink mark into a multi-resolution Windows icon at build time.
+    from PIL import Image, ImageDraw
+    icon = ROOT / "dist" / "viunalink.ico"
+    icon.parent.mkdir(parents=True, exist_ok=True)
+    sizes = (16, 24, 32, 48, 64, 128, 256)
+    frames = []
+    for size in sizes:
+        im = Image.new("RGBA", (size, size), (7, 23, 46, 255))
+        d = ImageDraw.Draw(im)
+        scale = size / 108
+        def pt(x, y): return (round(x * scale), round(y * scale))
+        width = max(2, round(6 * scale))
+        d.line([pt(36, 54), pt(72, 28)], fill=(85, 214, 194, 255), width=width)
+        d.line([pt(36, 54), pt(72, 80)], fill=(85, 214, 194, 255), width=width)
+        radius = max(3, round(9 * scale))
+        for x, y in ((36, 54), (72, 28), (72, 80)):
+            cx, cy = pt(x, y)
+            d.ellipse((cx-radius, cy-radius, cx+radius, cy+radius), fill=(244, 247, 255, 255))
+        frames.append(im)
+    frames[-1].save(icon, format="ICO", sizes=[(s, s) for s in sizes])
+    cmd += ["--icon", str(icon)]
     cmd.append(str(ROOT / "main.py"))
     print(" ".join(cmd))
     rc = subprocess.call(cmd)
