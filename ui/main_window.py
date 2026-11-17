@@ -1,4 +1,4 @@
-"""Unified single-window UI for NexaLink 1.1 – Persian UI.
+"""Unified single-window UI for ViunaLink 1.1 – Persian UI.
 
 One page / one window that switches between Host and Viewer modes.
 """
@@ -454,7 +454,7 @@ class HostPanel(QWidget):
     def _on_started(self, host, exc) -> None:
         self.btn.setEnabled(True)
         if exc is not None:
-            QMessageBox.critical(self, "NexaLink", f"خطا در شروع اشتراک‌گذاری:\n{exc}")
+            QMessageBox.critical(self, "ViunaLink", f"خطا در شروع اشتراک‌گذاری:\n{exc}")
             return
         self.host = host
         self.cfg.save()
@@ -733,7 +733,7 @@ class ViewerPanel(QWidget):
             return
         password = self.pw_edit.text()
         if not password:
-            QMessageBox.warning(self, "NexaLink", "لطفاً رمز عبور را وارد کنید.")
+            QMessageBox.warning(self, "ViunaLink", "لطفاً رمز عبور را وارد کنید.")
             return
 
         relay = RelaySettings(self.cfg.relay_server, self.cfg.relay_port,
@@ -787,7 +787,7 @@ class ViewerPanel(QWidget):
     def _on_closed(self, reason: str) -> None:
         if not reason:
             return
-        ans = QMessageBox.question(self, "NexaLink", f"{reason}\n\nدوباره وصل شویم؟")
+        ans = QMessageBox.question(self, "ViunaLink", f"{reason}\n\nدوباره وصل شویم؟")
         if ans == QMessageBox.StandardButton.Yes and self._args:
             self._start_session()
         else:
@@ -830,7 +830,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.cfg = cfg or Config.load()
         self.book = AddressBook()
-        self.setWindowTitle("NexaLink")
+        self.setWindowTitle("ViunaLink")
         self.resize(960, 680)
         self.setMinimumSize(720, 520)
         self.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
@@ -848,7 +848,7 @@ class MainWindow(QMainWindow):
         sl.setContentsMargins(12, 16, 12, 16)
         sl.setSpacing(8)
 
-        logo = QLabel("NexaLink")
+        logo = QLabel("ViunaLink")
         logo.setObjectName("title")
         logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         sl.addWidget(logo)
