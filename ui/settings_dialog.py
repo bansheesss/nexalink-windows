@@ -33,7 +33,7 @@ def ask_settings_access(parent, cfg: Config) -> bool:
         again, ok = QInputDialog.getText(parent, "رمز تنظیمات", "رمز را دوباره وارد کنید:",
                                          QLineEdit.EchoMode.Password)
         if not ok or again != pw:
-            QMessageBox.warning(parent, "NexaLink", "دو رمز یکسان نبودند.")
+            QMessageBox.warning(parent, "ViunaLink", "دو رمز یکسان نبودند.")
             return False
         cfg.settings_lock = settingslock.make_hash(pw)
         cfg.save()
@@ -41,7 +41,7 @@ def ask_settings_access(parent, cfg: Config) -> bool:
     while True:
         wait = _throttle.wait_seconds()
         if wait > 0:
-            QMessageBox.warning(parent, "NexaLink",
+            QMessageBox.warning(parent, "ViunaLink",
                                 f"تلاش‌های ناموفق زیاد بود. {wait:.0f} ثانیه صبر کنید.")
             return False
         pw, ok = QInputDialog.getText(parent, "ورود به تنظیمات", "رمز تنظیمات:",
@@ -60,7 +60,7 @@ class SettingsDialog(QDialog):
     def __init__(self, cfg: Config, book: AddressBook, parent=None):
         super().__init__(parent)
         self.cfg, self.book = cfg, book
-        self.setWindowTitle("تنظیمات NexaLink")
+        self.setWindowTitle("تنظیمات ViunaLink")
         self.resize(640, 560)
         lay = QVBoxLayout(self)
         tabs = QTabWidget()
@@ -215,7 +215,7 @@ class SettingsDialog(QDialog):
         if ok and pw:
             self.cfg.settings_lock = settingslock.make_hash(pw)
             self.cfg.save()
-            QMessageBox.information(self, "NexaLink", "رمز تنظیمات تغییر کرد.")
+            QMessageBox.information(self, "ViunaLink", "رمز تنظیمات تغییر کرد.")
 
     def _test_relay(self) -> None:
         rs = RelaySettings(self.relay.text().strip(), self.relay_port.value(),
@@ -244,7 +244,7 @@ class SettingsDialog(QDialog):
     # ----------------------------------------------------------------- save
     def _save(self) -> None:
         if self.perm_on.isChecked() and len(self.perm.text()) < 6:
-            QMessageBox.warning(self, "NexaLink", "رمز دائمی باید حداقل ۶ کاراکتر باشد.")
+            QMessageBox.warning(self, "ViunaLink", "رمز دائمی باید حداقل ۶ کاراکتر باشد.")
             return
         c = self.cfg
         c.device_name = self.label.text().strip() or c.device_name
