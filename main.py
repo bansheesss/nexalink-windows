@@ -51,7 +51,7 @@ def run_host(args) -> int:
     from utils.config import config_path
     enable_dpi_awareness()
     print("=" * 50)
-    print(f"  NexaLink host   ID: {cfg.machine_id}")
+    print(f"  ViunaLink host   ID: {cfg.machine_id}")
     print(f"  Password: {cfg.password}")
     print(f"  Port: {cfg.port}   Addresses: {', '.join(local_ips()) or 'n/a'}")
     print(f"  Config: {config_path()}")
@@ -95,9 +95,9 @@ def run_unified(_args) -> int:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(prog="nexalink")
+    p = argparse.ArgumentParser(prog="viunalink")
     p.add_argument("-v", "--verbose", action="store_true")
-    p.add_argument("--version", action="version", version=f"NexaLink {__version__}")
+    p.add_argument("--version", action="version", version=f"ViunaLink {__version__}")
     p.add_argument("--reset-settings-lock", action="store_true",
                    help="remove the settings password (needs access to this computer)")
     sub = p.add_subparsers(dest="mode")
