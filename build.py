@@ -4,9 +4,9 @@
     python build.py --portable     # Windows/Linux folder + zip, runs without install/admin
     python build.py --onefile      # single executable (extracts to a temp dir on start)
 
---portable creates dist/NexaLink/ with a `portable.flag` file next to the
+--portable creates dist/ViunaLink/ with a `portable.flag` file next to the
 program, so ALL data (config, address book, received files) lives in
-dist/NexaLink/data/ and nothing is written to the registry or user profile.
+dist/ViunaLink/data/ and nothing is written to the registry or user profile.
 """
 from __future__ import annotations
 
@@ -17,9 +17,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-PORTABLE_README = """NexaLink - portable
+PORTABLE_README = """ViunaLink - portable
 =====================
-Run NexaLink.exe. No installation and no administrator rights are needed.
+Run ViunaLink.exe. No installation and no administrator rights are needed.
 Everything (settings, address book, received files) is stored in the "data" folder
 next to the program: copy/move the whole folder (e.g. on a USB stick) and it keeps working.
 
@@ -41,7 +41,7 @@ def main() -> int:
     a = ap.parse_args()
 
     cmd = [sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--windowed",
-           "--name", "NexaLink", "--paths", str(ROOT)]
+           "--name", "ViunaLink", "--paths", str(ROOT)]
     cmd.append("--onefile" if a.onefile else "--onedir")
     backend = "_win32" if sys.platform == "win32" else "_xorg"
     for mod in ("keyboard", "mouse"):
@@ -57,12 +57,12 @@ def main() -> int:
     if rc or not a.portable or a.onefile:
         return rc
 
-    out = ROOT / "dist" / "NexaLink"
+    out = ROOT / "dist" / "ViunaLink"
     (out / "portable.flag").write_text("portable mode: data is kept in ./data\n")
     (out / "README-PORTABLE.txt").write_text(PORTABLE_README, "utf-8")
     plat = "win64" if sys.platform == "win32" else sys.platform
-    archive = shutil.make_archive(str(ROOT / "dist" / f"NexaLink-portable-{plat}"),
-                                  "zip", ROOT / "dist", "NexaLink")
+    archive = shutil.make_archive(str(ROOT / "dist" / f"ViunaLink-portable-{plat}"),
+                                  "zip", ROOT / "dist", "ViunaLink")
     print("Portable package:", archive)
     return 0
 
