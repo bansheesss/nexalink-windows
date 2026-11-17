@@ -1,15 +1,21 @@
 [Unit]
-Description=ViunaLink relay service
+Description=ViunaLink Relay Server
+Wants=network-online.target
 After=network-online.target
 
 [Service]
+Type=simple
 User=viunalink
+Group=viunalink
 WorkingDirectory=/opt/viunalink
-Environment=RELAY_TOKEN=change-me
-ExecStart=/usr/bin/python3 -m relay --port 7072 --registry /var/lib/viunalink/registry.json
-Restart=always
+EnvironmentFile=/etc/viunalink/relay.env
+ExecStart=/opt/viunalink/.venv/bin/python -m relay --host 0.0.0.0 --port 7072 --registry /var/lib/viunalink/registry.json --cert /etc/viunalink/tls/fullchain.pem --key /etc/viunalink/tls/privkey.pem
+Restart=on-failure
+RestartSec=3
 NoNewPrivileges=true
+PrivateTmp=true
 ProtectSystem=strict
+ProtectHome=true
 ReadWritePaths=/var/lib/viunalink
 
 [Install]
