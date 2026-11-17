@@ -300,7 +300,7 @@ class HostPanel(QWidget):
         self.host: Optional[Host] = None
         self.loop = asyncio.new_event_loop()
         threading.Thread(target=self.loop.run_forever, daemon=True,
-                         name="remotelink-host").start()
+                         name="viunalink-host").start()
         self.prompter = Prompter(self)
         self.clipboard = ClipboardBridge()
         self.clipboard.enabled = cfg.share_clipboard
