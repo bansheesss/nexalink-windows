@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from test_remotelink import FakeCap, FakeClip, FakeInput, TClient  # noqa: E402
+from test_viunalink import FakeCap, FakeClip, FakeInput, TClient  # noqa: E402
 
 from core import settingslock  # noqa: E402
 from core.connect import ConnectError, open_target  # noqa: E402
